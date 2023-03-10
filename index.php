@@ -1,3 +1,33 @@
+  
+<?php
+
+$str = "";
+
+  if(isset($_POST['num0'])) {
+    $str = "hello";
+  }
+
+  // Gửi biến $str đến file process.php bằng phương thức POST
+  if($str != "") {
+    $url = "process.php";
+    $data = array('str' => $str);
+
+    $options = array(
+      'http' => array(
+        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+        'method'  => 'POST',
+        'content' => http_build_query($data),
+      ),
+    );
+
+    $context  = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+  }
+
+
+
+?>
+
 
 
 <!DOCTYPE html>
@@ -9,7 +39,7 @@
     <div class="Container">
         <div class="Calculator">
             <div class="screen">
-              <input type="text" name="screen" id="screen" value="<?php echo $ ?>">
+              <input type="text" name="screen" id="screen">Hello<?php echo $str?>
             </input>
 
               
@@ -42,7 +72,7 @@
                       <div class="warp2-1-in1-1">
                         <table>
                           <tr>
-                            <td><form method="post"><button class="btn" type="submit"  id="num1" name="num1">1</button></form></form></td>
+                            <td><form method="post" ><button class="btn" type="submit"  id="num1" name="num1">1</button></form></form></td>
                             <td><form method="post"><button class="btn" type="submit" id="num2" name="num2">2</button></form></form></td>
                             <td><form method="post"><button class="btn" type="submit" id="num3" name="num3">3</button></form></form></td>
                             <td><form method="post"><button class="btn" type="submit" id="tru" name="tru">-</button></form></form></td>
@@ -53,7 +83,7 @@
                       <div class="warp2-1-in1-2">
                         <table>
                         <tr>
-                            <td><form method="post"><button class="btn btn0" type="submit"  id="num0" name="num0" >0</button></form></form></td>
+                            <td><form method="post" action="process.php"><button class="btn btn0" type="submit"  id="num0" name="num0" onclick="" >0</button></form></form></td>
                             <td><form method="post"><button class="btn" type="submit" id="numdot" name="numdot">.</button></form></form></td>
                             <td><form method="post"><button class="btn" type="submit" id="cong" name="cong">+</button></form></form></td>
                           </tr>
@@ -76,5 +106,30 @@
             </div>
         </div>
     </div>
+    <script>
+
+function myFunction1(){
+ 
+  document.getElementById("screen").value+="0";
+};
+
+		function addHello() {
+			var myInput = document.getElementById("screen");
+			myInput.value += "hello";
+		}
+
+		var button = document.querySelector('button');
+		var clicks = 0;
+		button.addEventListener('click', function() {
+			clicks++;
+			if (clicks === 2) {
+				addHello();
+				clicks = 0;
+			}
+		});
+
+
+</script>
+
 </body>
 </html>
